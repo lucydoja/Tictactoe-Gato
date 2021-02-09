@@ -199,7 +199,12 @@ export class Tictactoe extends React.Component {
 						<div className="m-4 ">
 							<h2>Elige tu arma</h2>
 						</div>
-						<form>
+						<form
+							onSubmit={() => {
+								this.setState({
+									iniciar: true
+								});
+							}}>
 							<div className="d-flex justify-content-center">
 								<div className="m-2 d-flex flex-column align-items-center">
 									<h1>
@@ -237,12 +242,7 @@ export class Tictactoe extends React.Component {
 
 							<button
 								type="submit"
-								className="btn btn-primary btn-lg  m-4"
-								onClick={() => {
-									this.setState({
-										iniciar: true
-									});
-								}}>
+								className="btn btn-primary btn-lg  m-4">
 								<strong>Iniciar juego</strong>
 							</button>
 						</form>
