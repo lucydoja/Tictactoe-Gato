@@ -13,7 +13,7 @@
 */
 body{
     background-color: black;
-    
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 #cabeza{
@@ -35,17 +35,28 @@ position: absolute;
 .cuadrados{
     color: white;
     background-color: black;
-    border: 2px solid white;
-    
-    height: 30 vw;
-    width: 30 vw; 
-  
+    border: 1px solid gray;
+    height: 15vw;
+    width: 15vw; 
   color: white;
-  padding: 15px 32px;
+  padding: 0vw 3vw;
   text-align: center;
-  text-decoration: none;
+  text-decoration: strong;
   display: inline-block;
-  font-size: 20px;
-  margin: 4px 2px;
+  font-size: 10vw;
   cursor: pointer;
+  font-weight: 900;
+}
+
+#juego{
+    position: absolute;
+  top: 52%;
+ left: 50%;
+ transform: translate(-50%, -50%);
+ text-align: center;
+}
+
+#estado{
+    color: orange;
+    font-size: 20px;
 }

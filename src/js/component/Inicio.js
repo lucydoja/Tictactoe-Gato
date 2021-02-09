@@ -13,19 +13,18 @@ export class Tictactoe extends React.Component {
 			jugador2: "Jugador 2",
 			turnoX: true,
 			iniciar: false,
-			estado: ""
+			estado: "Haz la primer jugada",
+			ganador: false
 		};
+
 		this.cuadrado = this.cuadrado.bind(this);
 		this.OnClick = this.OnClick.bind(this);
-		this.ganador = this.ganador.bind(this);
+		this.ganador1 = this.ganador1.bind(this);
+		this.ganador2 = this.ganador2.bind(this);
+		this.ganador3 = this.ganador3.bind(this);
+		this.ganador4 = this.ganador4.bind(this);
+		this.empate = this.empate.bind(this);
 		this.cambioEstado = this.cambioEstado.bind(this);
-		/*
-		this.tunoXO = this.turnoXO.bind(this);
-
-		/*
-		this.startTimer = this.startTimer.bind(this);
-		this.stopTimer = this.stopTimer.bind(this);
-		this.resetTimer = this.resetTimer.bind(this);*/
 	}
 
 	cuadrado(i, j) {
@@ -38,38 +37,142 @@ export class Tictactoe extends React.Component {
 
 	OnClick(i, j) {
 		this.cambioEstado(i, j);
-		this.ganador(i, j);
+		this.ganador1(i, j);
+		this.ganador2(i, j);
+		this.ganador3(i, j);
+		this.ganador4(i, j);
+		this.empate(i, j);
 	}
 
 	cambioEstado(i, j) {
-		let estado = this.state.turnoX
-			? "Es el turno de: " + this.state.jugador1
-			: "Es el turno de: " + this.state.jugador2;
 		/* copiar el array en vez de escribirle encima es mejor practica */
-		var valores = this.state.valores.slice();
-		valores[i][j] = this.state.turnoX ? "X" : "O";
-		let turnoX = !this.state.turnoX;
-		this.setState({ valores: valores, turnoX: turnoX, estado: estado });
+		let valores = this.state.valores.slice();
+		if (valores[i][j] == null && this.state.ganador == false) {
+			valores[i][j] = this.state.turnoX ? "X" : "O";
+			let estado = this.state.turnoX
+				? "Es el turno de: " + this.state.jugador2
+				: "Es el turno de: " + this.state.jugador1;
+			let turnoX = !this.state.turnoX;
+			this.setState({ valores: valores, turnoX: turnoX, estado: estado });
+		}
 	}
 
-	ganador(i, j) {
+	ganador1(i, j) {
+		let valores = this.state.valores;
+		let long = valores.length;
+		let contador = 0;
+		for (i = 0; i < long - 1; i++) {
+			if (
+				valores[i][i] != null &&
+				valores[i][i] == valores[i + 1][i + 1]
+			) {
+				contador += 1;
+				if (contador == 2) {
+					let estado =
+						valores[i][i] == "X"
+							? "FIN DEL JUEGO! Ha ganado: " + this.state.jugador1
+							: "FIN DEL JUEGO! Ha ganado: " +
+							  this.state.jugador2;
+
+					this.setState({ estado: estado, ganador: true });
+				}
+			}
+		}
+	}
+
+	ganador2(i, j) {
+		let valores = this.state.valores;
+		let long = valores.length;
+
+		for (i = 0; i < long; i++) {
+			let contador = 0;
+			for (j = 0; j < long - 1; j++)
+				if (
+					valores[i][j] != null &&
+					valores[i][j] == valores[i][j + 1]
+				) {
+					contador += 1;
+					if (contador == 2) {
+						let estado =
+							valores[i][j] == "X"
+								? "FIN DEL JUEGO! Ha ganado: " +
+								  this.state.jugador1
+								: "FIN DEL JUEGO! Ha ganado: " +
+								  this.state.jugador2;
+
+						this.setState({ estado: estado, ganador: true });
+					}
+				}
+		}
+	}
+
+	ganador3(i, j) {
+		let valores = this.state.valores;
+		let long = valores.length;
+
+		for (j = 0; j < long; j++) {
+			let contador = 0;
+			for (i = 0; i < long - 1; i++)
+				if (
+					valores[i][j] != null &&
+					valores[i][j] == valores[i + 1][j]
+				) {
+					contador += 1;
+					if (contador == 2) {
+						let estado =
+							valores[i][j] == "X"
+								? "FIN DEL JUEGO! Ha ganado: " +
+								  this.state.jugador1
+								: "FIN DEL JUEGO! Ha ganado: " +
+								  this.state.jugador2;
+
+						this.setState({ estado: estado, ganador: true });
+					}
+				}
+		}
+	}
+
+	ganador4(i, j) {
+		let valores = this.state.valores;
+		let long = valores.length;
+		let contador = 0;
+		j = long - 1;
+
+		for (i = 0; i < long - 1; i++) {
+			if (
+				valores[i][j] != null &&
+				valores[i][j] == valores[i + 1][j - 1] &&
+				this.state.ganador == false
+			) {
+				contador += 1;
+				if (contador == 2) {
+					let estado =
+						valores[i][j] == "X"
+							? "FIN DEL JUEGO! Ha ganado: " + this.state.jugador1
+							: "FIN DEL JUEGO! Ha ganado: " +
+							  this.state.jugador2;
+
+					this.setState({ estado: estado, ganador: true });
+				}
+
+				j -= 1;
+			}
+		}
+	}
+
+	empate(i, j) {
 		let valores = this.state.valores;
 		let long = valores.length;
 		let contador = 0;
 		for (i = 0; i < long; i++) {
-			if (valores[i][i] == "X") {
-				contador += 1;
-				if (contador == 3) {
-					let estado =
-						"FIN DEL JUEGO! Ha ganado: " + this.state.jugador1;
-					this.setState({ estado: estado });
-				}
-			} else if (valores[i][i] == "O") {
-				contador += 1;
-				if (contador == 3) {
-					let estado =
-						"FIN DEL JUEGO! Ha ganado: " + this.state.jugador2;
-					this.setState({ estado: estado });
+			for (j = 0; j < long; j++) {
+				if (valores[i][j] != null && this.state.ganador == false) {
+					contador += 1;
+
+					if (contador == 9) {
+						let estado = "Es un empate";
+						this.setState({ estado: estado });
+					}
 				}
 			}
 		}
@@ -144,7 +247,7 @@ export class Tictactoe extends React.Component {
 					<div className="d-flex justify-content-center" id="cuerpo">
 						<button
 							type="button"
-							className="btn btn-primary btn-lg mt-4 m-2"
+							className="btn btn-outline-light btn-lg mt-4 m-2"
 							onClick={() => {
 								this.setState({
 									valores: [
@@ -153,14 +256,15 @@ export class Tictactoe extends React.Component {
 										Array(3).fill(null)
 									],
 									turnoX: true,
-									estado: ""
+									estado: "Haz la primer jugada",
+									ganador: false
 								});
 							}}>
 							<strong>Reset</strong>
 						</button>
 						<button
 							type="button"
-							className="btn btn-primary btn-lg mt-4 m-2"
+							className="btn btn-outline-light btn-lg mt-4 m-2"
 							onClick={() => {
 								this.setState({
 									valores: [
@@ -170,28 +274,33 @@ export class Tictactoe extends React.Component {
 									],
 									turnoX: true,
 									iniciar: false,
-									estado: ""
+									estado: "Haz la primer jugada",
+									ganador: false
 								});
 							}}>
 							<strong>Star over</strong>
 						</button>
 					</div>
-					<div className="board-row">
-						{this.cuadrado(0, 0)}
-						{this.cuadrado(0, 1)}
-						{this.cuadrado(0, 2)}
+					<div className="d-flex justify-content-center" id="estado">
+						{this.state.estado}
 					</div>
-					<div className="board-row">
-						{this.cuadrado(1, 0)}
-						{this.cuadrado(1, 1)}
-						{this.cuadrado(1, 2)}
+					<div id="juego">
+						<div className="d-flex justify-content-center">
+							{this.cuadrado(0, 0)}
+							{this.cuadrado(0, 1)}
+							{this.cuadrado(0, 2)}
+						</div>
+						<div className="d-flex justify-content-center">
+							{this.cuadrado(1, 0)}
+							{this.cuadrado(1, 1)}
+							{this.cuadrado(1, 2)}
+						</div>
+						<div className="d-flex justify-content-center">
+							{this.cuadrado(2, 0)}
+							{this.cuadrado(2, 1)}
+							{this.cuadrado(2, 2)}
+						</div>
 					</div>
-					<div className="board-row">
-						{this.cuadrado(2, 0)}
-						{this.cuadrado(2, 1)}
-						{this.cuadrado(2, 2)}
-					</div>
-					<div>{this.state.estado}</div>
 				</div>
 			);
 		}
