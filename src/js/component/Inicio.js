@@ -292,10 +292,13 @@ export class Tictactoe extends React.Component {
 							<strong>Start over</strong>
 						</button>
 					</div>
-					<div className="d-flex justify-content-center" id="estado">
-						{this.state.estado}
-					</div>
+
 					<div id="juego">
+						<div
+							className="d-flex justify-content-center"
+							id="estado">
+							{this.state.estado}
+						</div>
 						<div className="d-flex justify-content-center">
 							{this.cuadrado(0, 0)}
 							{this.cuadrado(0, 1)}

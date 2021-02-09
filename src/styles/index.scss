@@ -45,12 +45,12 @@ position: absolute;
   display: inline-block;
   font-size: 10vw;
   cursor: pointer;
-  font-weight: 900;
+  font-weight: 1000;
 }
 
 #juego{
     position: absolute;
-  top: 52%;
+  top: 50%;
  left: 50%;
  transform: translate(-50%, -50%);
  text-align: center;
@@ -58,5 +58,5 @@ position: absolute;
 
 #estado{
     color: orange;
-    font-size: 20px;
+    font-size: 25px;
 }
