@@ -11,3 +11,41 @@
     import 'relative/path/to/stylesheet.scss';
 
 */
+body{
+    background-color: black;
+    
+}
+
+#cabeza{
+    color: white;
+}
+#inicio {
+ background-color: rgb(187, 185, 185);
+ box-shadow: 0px 0px 15px 0px rgb(187, 185, 185);  
+ width: auto;
+ height: auto;
+ align-items: center;
+position: absolute;
+  top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%);
+ text-align: center;
+}
+
+.cuadrados{
+    color: white;
+    background-color: black;
+    border: 2px solid white;
+    
+    height: 30 vw;
+    width: 30 vw; 
+  
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
