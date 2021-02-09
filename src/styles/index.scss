@@ -1,16 +1,5 @@
 @import "~bootstrap/scss/bootstrap.scss";
 
-/* 
-
-    You can write your own styles here...
-    
-    
-    ...Or you can use the import command to include 
-    other sylesheets into your bunde as well, e.j:
-    
-    import 'relative/path/to/stylesheet.scss';
-
-*/
 body{
     background-color: black;
     font-family: Arial, Helvetica, sans-serif;
@@ -58,5 +47,5 @@ position: absolute;
 
 #estado{
     color: orange;
-    font-size: 25px;
+    font-size: 20px;
 }

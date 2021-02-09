@@ -18,7 +18,6 @@ export class Tictactoe extends React.Component {
 			estado: "Haz la primer jugada",
 			ganador: false
 		};
-		this.copiaState = this.state;
 
 		this.cuadrado = this.cuadrado.bind(this);
 		this.OnClick = this.OnClick.bind(this);
@@ -40,11 +39,6 @@ export class Tictactoe extends React.Component {
 
 	OnClick(i, j) {
 		this.cambioEstado(i, j);
-		this.ganador1(i, j);
-		this.ganador2(i, j);
-		this.ganador3(i, j);
-		this.ganador4(i, j);
-		this.empate(i, j);
 	}
 
 	cambioEstado(i, j) {
@@ -57,7 +51,12 @@ export class Tictactoe extends React.Component {
 				: "Es el turno de: " + this.state.jugador1;
 			let turnoX = !this.state.turnoX;
 			this.setState({ valores: valores, turnoX: turnoX, estado: estado });
+			this.empate(i, j);
 		}
+		this.ganador1(i, j);
+		this.ganador2(i, j);
+		this.ganador3(i, j);
+		this.ganador4(i, j);
 	}
 
 	/* Este revisa la diagonal de derecha a izquierda*/
@@ -121,7 +120,8 @@ export class Tictactoe extends React.Component {
 			for (i = 0; i < long - 1; i++)
 				if (
 					valores[i][j] != null &&
-					valores[i][j] == valores[i + 1][j]
+					valores[i][j] == valores[i + 1][j] &&
+					this.state.ganador == false
 				) {
 					contador += 1;
 					if (contador == 2) {
@@ -145,6 +145,7 @@ export class Tictactoe extends React.Component {
 		j = long - 1;
 
 		for (i = 0; i < long - 1; i++) {
+			console.log(i, j);
 			if (
 				valores[i][j] != null &&
 				valores[i][j] == valores[i + 1][j - 1] &&
@@ -160,7 +161,6 @@ export class Tictactoe extends React.Component {
 
 					this.setState({ estado: estado, ganador: true });
 				}
-
 				j -= 1;
 			}
 		}
@@ -292,13 +292,10 @@ export class Tictactoe extends React.Component {
 							<strong>Start over</strong>
 						</button>
 					</div>
-
+					<div className="d-flex justify-content-center" id="estado">
+						{this.state.estado}
+					</div>
 					<div id="juego">
-						<div
-							className="d-flex justify-content-center"
-							id="estado">
-							{this.state.estado}
-						</div>
 						<div className="d-flex justify-content-center">
 							{this.cuadrado(0, 0)}
 							{this.cuadrado(0, 1)}
