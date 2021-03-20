@@ -1,6 +1,6 @@
 import React from "react";
 
-/* Lo hice de forma complicada para que se pueda extender a cuantas columnas y filas uno quiera de forma facil*/
+// This game was developed following a matrix structure, this will allow the game to grow in rows and columns easily
 
 export class Tictactoe extends React.Component {
 	constructor() {
@@ -15,12 +15,11 @@ export class Tictactoe extends React.Component {
 			jugador2: "Jugador 2",
 			turnoX: true,
 			iniciar: false,
-			estado: "Haz la primer jugada",
+			estado: "",
 			ganador: false
 		};
 
 		this.cuadrado = this.cuadrado.bind(this);
-		this.OnClick = this.OnClick.bind(this);
 		this.ganador1 = this.ganador1.bind(this);
 		this.ganador2 = this.ganador2.bind(this);
 		this.ganador3 = this.ganador3.bind(this);
@@ -28,19 +27,18 @@ export class Tictactoe extends React.Component {
 		this.empate = this.empate.bind(this);
 		this.cambioEstado = this.cambioEstado.bind(this);
 	}
-	/* Aqui se generan los cuadros*/
+	//This generates the squares that are the base for the game and asigns the values in the matrix
 	cuadrado(i, j) {
 		return (
-			<div className="cuadrados" onClick={() => this.OnClick(i, j)}>
+			<div
+				className="cuadrados text-center"
+				onClick={() => this.cambioEstado(i, j)}>
 				{this.state.valores[i][j]}
 			</div>
 		);
 	}
 
-	OnClick(i, j) {
-		this.cambioEstado(i, j);
-	}
-
+	// Status change, puts the X or O when the player clicks and stores its values
 	cambioEstado(i, j) {
 		/* copiar el array en vez de escribirle encima es mejor practica */
 		let valores = this.state.valores.slice();
@@ -59,7 +57,7 @@ export class Tictactoe extends React.Component {
 		this.ganador4(i, j);
 	}
 
-	/* Este revisa la diagonal de derecha a izquierda*/
+	// Checks the diagonal from top-left to bottom-right for a winner
 	ganador1(i, j) {
 		let valores = this.state.valores;
 		let long = valores.length;
@@ -83,7 +81,7 @@ export class Tictactoe extends React.Component {
 		}
 	}
 
-	/* Este revisa horizontalmente*/
+	// Checks horizontally for a winner
 	ganador2(i, j) {
 		let valores = this.state.valores;
 		let long = valores.length;
@@ -110,7 +108,7 @@ export class Tictactoe extends React.Component {
 		}
 	}
 
-	/* Este revisa verticalmente*/
+	// Checks vertically for a winner
 	ganador3(i, j) {
 		let valores = this.state.valores;
 		let long = valores.length;
@@ -137,7 +135,7 @@ export class Tictactoe extends React.Component {
 				}
 		}
 	}
-	/* Este revisa la diagonal de derecha a izquierda*/
+	// Checks the diagonal from top-right to bottom-left for a winner
 	ganador4(i, j) {
 		let valores = this.state.valores;
 		let long = valores.length;
@@ -166,7 +164,7 @@ export class Tictactoe extends React.Component {
 		}
 	}
 
-	/* Este revisa si hay un empate*/
+	// Checks if no one won
 	empate(i, j) {
 		let valores = this.state.valores;
 		let long = valores.length;
@@ -186,12 +184,12 @@ export class Tictactoe extends React.Component {
 	}
 
 	render() {
-		/* Condicional para meter la pagina de inicio*/
+		// Starting page
 		if (this.state.iniciar == false) {
 			return (
-				<div>
+				<div className="container">
 					<div className="row justify-content-center mt-4">
-						<h1 id="cabeza"> Juego Tic Tac Toe</h1>
+						<h1 id="cabeza">Tic Tac Toe</h1>
 					</div>
 					<div
 						className="d-flex flex-column justify-content-center"
@@ -202,7 +200,8 @@ export class Tictactoe extends React.Component {
 						<form
 							onSubmit={() => {
 								this.setState({
-									iniciar: true
+									iniciar: true,
+									estado: `${this.state.jugador1} haz la primer jugada`
 								});
 							}}>
 							<div className="d-flex justify-content-center">
@@ -215,11 +214,12 @@ export class Tictactoe extends React.Component {
 										type="text"
 										placeholder="Jugador 1"
 										onChange={e => {
-											this.setState({
-												jugador1: e.target.value
-											});
+											if (e.target.value != "") {
+												this.setState({
+													jugador1: e.target.value
+												});
+											}
 										}}
-										required
 									/>
 								</div>
 								<div className="m-2  d-flex flex-column align-items-center">
@@ -231,11 +231,12 @@ export class Tictactoe extends React.Component {
 										type="text"
 										placeholder="Jugador 2"
 										onChange={e => {
-											this.setState({
-												jugador2: e.target.value
-											});
+											if (e.target.value != "") {
+												this.setState({
+													jugador2: e.target.value
+												});
+											}
 										}}
-										required
 									/>
 								</div>
 							</div>
@@ -249,51 +250,14 @@ export class Tictactoe extends React.Component {
 					</div>
 				</div>
 			);
-			/* Aqui se da inicio al juego */
+			// Game starts here
 		} else if (this.state.iniciar == true) {
 			return (
-				<div>
-					<div className="d-flex justify-content-center" id="cuerpo">
-						<button
-							type="button"
-							className="btn btn-outline-light btn-lg mt-4 m-2"
-							onClick={() => {
-								this.setState({
-									valores: [
-										Array(3).fill(null),
-										Array(3).fill(null),
-										Array(3).fill(null)
-									],
-									turnoX: true,
-									estado: "Haz la primer jugada",
-									ganador: false
-								});
-							}}>
-							<strong>Reset</strong>
-						</button>
-						<button
-							type="button"
-							className="btn btn-outline-light btn-lg mt-4 m-2"
-							onClick={() => {
-								this.setState({
-									valores: [
-										Array(3).fill(null),
-										Array(3).fill(null),
-										Array(3).fill(null)
-									],
-									turnoX: true,
-									iniciar: false,
-									estado: "Haz la primer jugada",
-									ganador: false,
-									jugador2: "Jugador 2",
-									jugador1: "Jugador 1"
-								});
-							}}>
-							<strong>Start over</strong>
-						</button>
-					</div>
-					<div className="d-flex justify-content-center" id="estado">
-						{this.state.estado}
+				<div className="container">
+					<div
+						className="d-flex justify-content-center my-4"
+						id="estado">
+						<span className="text-center">{this.state.estado}</span>
 					</div>
 					<div id="juego">
 						<div className="d-flex justify-content-center">
@@ -311,6 +275,45 @@ export class Tictactoe extends React.Component {
 							{this.cuadrado(2, 1)}
 							{this.cuadrado(2, 2)}
 						</div>
+					</div>
+					<div className="d-flex justify-content-center" id="cuerpo">
+						<button
+							type="button"
+							className="btn btn-outline-light btn-lg mt-4 m-2"
+							onClick={() => {
+								this.setState({
+									valores: [
+										Array(3).fill(null),
+										Array(3).fill(null),
+										Array(3).fill(null)
+									],
+									turnoX: true,
+									estado: `${this.state.jugador1} haz la primer jugada`,
+									ganador: false
+								});
+							}}>
+							<strong>Reset</strong>
+						</button>
+						<button
+							type="button"
+							className="btn btn-outline-light btn-lg mt-4 m-2"
+							onClick={() => {
+								this.setState({
+									valores: [
+										Array(3).fill(null),
+										Array(3).fill(null),
+										Array(3).fill(null)
+									],
+									turnoX: true,
+									iniciar: false,
+									estado: `${this.state.jugador1} haz la primer jugada`,
+									ganador: false,
+									jugador2: "Jugador 2",
+									jugador1: "Jugador 1"
+								});
+							}}>
+							<strong>Start over</strong>
+						</button>
 					</div>
 				</div>
 			);
