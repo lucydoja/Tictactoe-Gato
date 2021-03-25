@@ -7,7 +7,7 @@ This project is based primarily on **JavaScript**, using **React** for the clien
 
 
 ### View
-You can view this project in the following  link (https://lucydoja.github.io/Star_Wars-Lucia_Dominguez/) and explore for yourself. 
+You can view this project in the following  link (https://lucydoja.github.io/Tictactoe-Gato/) and explore for yourself. 
 
 If you want to run the project on Gitpod your will have to run the following on your command line:
 ```
