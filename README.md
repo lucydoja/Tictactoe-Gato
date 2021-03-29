@@ -22,7 +22,7 @@ $ npm run start
 * Play tic tac toe until the game ends
 * Restart the game
 * Reset player's names 
-* Writen description of whose turn is it and who is the winner
+* Written description of whose turn is it and who is the winner
 
 ### Fun fact:
 In spanish (at least in Costa Rica) we call this game "gato" wich means cat in english.
